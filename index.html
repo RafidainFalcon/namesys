@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>مدينة العاب نور المقدادية - إدارة الموظفين</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="noise-layer" aria-hidden="true"></div>
+        <div id="toastHost" class="toast-host"></div>
+
+        <main id="loginScreen" class="login-screen">
+            <div class="orb orb-one"></div>
+            <div class="orb orb-two"></div>
+            <div class="orb orb-three"></div>
+
+            <section class="login-card glass-panel">
+                <img
+                    class="brand-logo"
+                    src="logo.jpg"
+                    alt="شعار مدينة العاب نور المقدادية"
+                />
+                <p class="eyebrow">مدينة العاب نور المقدادية</p>
+                <h1>إدارة الموظفين</h1>
+                <p class="login-subtitle">
+                    منصة فاخرة لإدارة موظفي مدينة العاب نور المقدادية والحضور
+                    والرواتب والسلف بتجربة آمنة وسريعة.
+                </p>
+
+                <form id="loginForm" autocomplete="off">
+                    <label class="field">
+                        <span>اسم المستخدم</span>
+                        <input
+                            id="username"
+                            type="text"
+                            inputmode="numeric"
+                            placeholder="07716163020"
+                            required
+                        />
+                    </label>
+                    <label class="field">
+                        <span>كلمة المرور</span>
+                        <div class="password-wrap">
+                            <input
+                                id="password"
+                                type="password"
+                                placeholder="••••••••••••"
+                                required
+                            />
+                            <button
+                                class="icon-btn"
+                                id="togglePassword"
+                                type="button"
+                                aria-label="إظهار كلمة المرور"
+                            >
+                                👁
+                            </button>
+                        </div>
+                    </label>
+                    <button class="primary-btn login-btn" type="submit">
+                        تسجيل الدخول
+                    </button>
+                    <p id="loginError" class="form-error" role="alert"></p>
+                </form>
+            </section>
+        </main>
+
+        <section id="appShell" class="app-shell hidden">
+            <aside class="sidebar glass-panel">
+                <div class="sidebar-header">
+                    <img
+                        class="brand-logo small"
+                        src="logo.jpg"
+                        alt="شعار مدينة العاب نور المقدادية"
+                    />
+                    <div>
+                        <h2>مدينة العاب نور المقدادية</h2>
+                        <span>إدارة الموظفين</span>
+                    </div>
+                </div>
+
+                <nav class="nav-list" aria-label="التنقل الرئيسي">
+                    <button class="nav-item active" data-view="dashboardView">
+                        لوحة التحكم
+                    </button>
+                    <button class="nav-item" data-view="employeesView">
+                        الموظفون
+                    </button>
+                    <button class="nav-item" data-view="reportsView">
+                        التقارير والنسخ
+                    </button>
+                    <button class="nav-item" data-view="archiveView">
+                        الأرشيف
+                    </button>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <button id="darkModeToggle" class="secondary-btn">
+                        تبديل الوضع الداكن
+                    </button>
+                    <button id="settingsBtn" class="secondary-btn">
+                        تغيير بيانات الدخول
+                    </button>
+                    <button id="logoutBtn" class="danger-btn">
+                        تسجيل الخروج
+                    </button>
+                </div>
+            </aside>
+
+            <dialog id="settingsModal" class="modal glass-panel">
+                <form id="settingsForm" method="dialog">
+                    <div class="modal-header">
+                        <div>
+                            <p class="eyebrow">إعدادات الدخول</p>
+                            <h2>تغيير اسم المستخدم وكلمة المرور</h2>
+                        </div>
+                        <button class="icon-btn" type="button" data-close-modal>
+                            ×
+                        </button>
+                    </div>
+
+                    <div class="form-grid">
+                        <label class="field">
+                            <span>اسم المستخدم الحالي</span>
+                            <input
+                                id="settingsCurrentUsername"
+                                type="text"
+                                disabled
+                            />
+                        </label>
+                        <label class="field">
+                            <span>التحقق بكلمة المرور الحالية</span>
+                            <input
+                                id="settingsCurrentPassword"
+                                type="password"
+                                required
+                            />
+                        </label>
+                        <label class="field">
+                            <span>اسم المستخدم الجديد</span>
+                            <input id="settingsNewUsername" type="text" />
+                        </label>
+                        <label class="field">
+                            <span>كلمة المرور الجديدة</span>
+                            <input id="settingsNewPassword" type="password" />
+                        </label>
+                        <label class="field">
+                            <span>تأكيد كلمة المرور الجديدة</span>
+                            <input
+                                id="settingsConfirmPassword"
+                                type="password"
+                            />
+                        </label>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button
+                            class="secondary-btn"
+                            type="button"
+                            data-close-modal
+                        >
+                            إلغاء
+                        </button>
+                        <button class="primary-btn" type="submit">
+                            حفظ التغييرات
+                        </button>
+                    </div>
+                </form>
+            </dialog>
+
+            <div class="content-area">
+                <header class="topbar glass-panel">
+                    <button
+                        id="mobileMenuBtn"
+                        class="icon-btn mobile-only"
+                        type="button"
+                    >
+                        ☰
+                    </button>
+                    <div>
+                        <p class="eyebrow">
+                            مدينة العاب نور المقدادية - إدارة الموظفين
+                        </p>
+                        <h1 id="pageTitle">لوحة التحكم</h1>
+                    </div>
+                    <div class="topbar-actions">
+                        <div class="clock-card">
+                            <span id="dateLabel"></span>
+                            <strong id="clockLabel"></strong>
+                        </div>
+                        <button
+                            id="seedDemoBtn"
+                            class="secondary-btn"
+                            type="button"
+                        >
+                            إضافة بيانات تجريبية
+                        </button>
+                    </div>
+                </header>
+
+                <section id="dashboardView" class="view active-view">
+                    <div class="stats-grid">
+                        <article class="stat-card glass-panel">
+                            <span>إجمالي الموظفين</span>
+                            <strong id="totalEmployees">0</strong>
+                            <small>موظف مسجل</small>
+                        </article>
+                        <article class="stat-card glass-panel">
+                            <span>إجمالي الرواتب الشهرية</span>
+                            <strong id="totalMonthlySalaries">0</strong>
+                            <small>د.ع</small>
+                        </article>
+                        <article class="stat-card glass-panel">
+                            <span>إجمالي السحوبات</span>
+                            <strong id="totalWithdrawals">0</strong>
+                            <small>الشهر الحالي</small>
+                        </article>
+                        <article class="stat-card glass-panel">
+                            <span>الغائبون اليوم</span>
+                            <strong id="absentToday">0</strong>
+                            <small>حسب سجل الحضور</small>
+                        </article>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <article class="panel glass-panel">
+                            <div class="panel-title">
+                                <div>
+                                    <p class="eyebrow">Salary Intelligence</p>
+                                    <h2>إحصائيات الرواتب</h2>
+                                </div>
+                            </div>
+                            <canvas id="salaryChart" height="180"></canvas>
+                        </article>
+                        <article class="panel glass-panel">
+                            <div class="panel-title">
+                                <div>
+                                    <p class="eyebrow">Operations</p>
+                                    <h2>آخر النشاطات</h2>
+                                </div>
+                            </div>
+                            <div id="activityFeed" class="activity-feed"></div>
+                        </article>
+                    </div>
+                </section>
+
+                <section id="employeesView" class="view">
+                    <div class="toolbar glass-panel">
+                        <div class="search-box">
+                            <span>⌕</span>
+                            <input
+                                id="searchInput"
+                                type="search"
+                                placeholder="ابحث عن موظف فورياً..."
+                            />
+                        </div>
+                        <button
+                            id="markAllPresentBtn"
+                            class="secondary-btn"
+                            type="button"
+                        >
+                            كل الموظفين حاضرين
+                        </button>
+                        <button
+                            id="openBatchAttendanceBtn"
+                            class="secondary-btn"
+                            type="button"
+                        >
+                            تحديد حضور
+                        </button>
+                        <button
+                            id="openEmployeeModal"
+                            class="primary-btn"
+                            type="button"
+                        >
+                            إضافة موظف
+                        </button>
+                    </div>
+
+                    <div class="employees-layout">
+                        <section class="table-panel glass-panel">
+                            <div class="panel-title">
+                                <h2>قائمة الموظفين</h2>
+                                <span id="employeeCountBadge" class="badge"
+                                    >0 موظف</span
+                                >
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>الموظف</th>
+                                            <th>الراتب</th>
+                                            <th>المتبقي</th>
+                                            <th>الغيابات</th>
+                                            <th>الحضور اليوم</th>
+                                            <th>إجراءات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="employeesTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <aside
+                            id="employeeDetails"
+                            class="details-panel glass-panel empty-state"
+                        >
+                            <h2>اختر موظفاً</h2>
+                            <p>
+                                ستظهر هنا تفاصيل الموظف والحضور والسحوبات
+                                والملاحظات.
+                            </p>
+                        </aside>
+                    </div>
+                </section>
+
+                <section id="reportsView" class="view">
+                    <div class="reports-grid">
+                        <article class="panel glass-panel">
+                            <p class="eyebrow">PDF & Print</p>
+                            <h2>تصدير وطباعة التقارير</h2>
+                            <p>
+                                اختر موظفاً من صفحة الموظفين ثم استخدم أزرار
+                                التقرير داخل بطاقة التفاصيل لطباعة أو حفظ
+                                التقرير كملف PDF من نافذة الطباعة.
+                            </p>
+                            <div class="backup-actions">
+                                <button
+                                    id="printEmployeesA4Btn"
+                                    class="primary-btn"
+                                    type="button"
+                                >
+                                    طباعة جدول الموظفين A4
+                                </button>
+                                <button
+                                    id="exportFullReportBtn"
+                                    class="secondary-btn"
+                                    type="button"
+                                >
+                                    تصدير سجل كامل مجدول CSV
+                                </button>
+                            </div>
+                        </article>
+                        <article class="panel glass-panel">
+                            <p class="eyebrow">Monthly Absence</p>
+                            <h2>تحديد غيابات هذا الشهر</h2>
+                            <p>
+                                اختر الموظف ثم حدد الأيام التي غابها خلال الشهر
+                                الحالي، وسيتم تسجيل الغياب والخصم تلقائياً.
+                            </p>
+                            <form id="monthlyAbsenceForm">
+                                <label class="field">
+                                    <span>اختر الموظف</span>
+                                    <select
+                                        id="monthlyAbsenceEmployee"
+                                        required
+                                    ></select>
+                                </label>
+                                <div
+                                    id="monthlyAbsenceDays"
+                                    class="month-days-grid"
+                                ></div>
+                                <div class="modal-actions">
+                                    <button class="primary-btn" type="submit">
+                                        حفظ الغيابات واحتساب الخصم
+                                    </button>
+                                </div>
+                            </form>
+                        </article>
+                        <article class="panel glass-panel">
+                            <p class="eyebrow">Backup Center</p>
+                            <h2>النسخ الاحتياطي والاستعادة</h2>
+                            <div class="backup-actions">
+                                <button
+                                    id="backupBtn"
+                                    class="primary-btn"
+                                    type="button"
+                                >
+                                    تحميل نسخة احتياطية JSON
+                                </button>
+                                <label class="secondary-btn file-label">
+                                    استعادة نسخة
+                                    <input
+                                        id="restoreInput"
+                                        type="file"
+                                        accept="application/json"
+                                        hidden
+                                    />
+                                </label>
+                                <button
+                                    id="clearDataBtn"
+                                    class="danger-btn"
+                                    type="button"
+                                >
+                                    مسح كل البيانات
+                                </button>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section id="archiveView" class="view">
+                    <div class="archive-header">
+                        <div class="archive-header-info">
+                            <p class="eyebrow">Monthly Archives</p>
+                            <h2>أرشيف البيانات الشهرية</h2>
+                            <p>تُحفظ البيانات تلقائياً عند بداية كل شهر جديد. يمكنك أيضاً إنشاء أرشيف يدوياً.</p>
+                        </div>
+                        <button class="primary-btn" onclick="archiveCurrentMonth()" type="button">
+                            أرشفة الشهر الحالي
+                        </button>
+                    </div>
+                    <div id="archivesContainer" class="archives-container"></div>
+                </section>
+            </div>
+        </section>
+
+        <dialog id="employeeModal" class="modal glass-panel">
+            <form id="employeeForm" method="dialog">
+                <div class="modal-header">
+                    <div>
+                        <p class="eyebrow">Employee Profile</p>
+                        <h2 id="modalTitle">إضافة موظف</h2>
+                    </div>
+                    <button class="icon-btn" type="button" data-close-modal>
+                        ×
+                    </button>
+                </div>
+                <input id="employeeId" type="hidden" />
+                <div class="form-grid">
+                    <label class="field">
+                        <span>الاسم الكامل</span>
+                        <input id="employeeName" type="text" required />
+                    </label>
+                    <label class="field">
+                        <span>الراتب الشهري</span>
+                        <input
+                            id="employeeSalary"
+                            type="number"
+                            min="0"
+                            step="1000"
+                            required
+                        />
+                    </label>
+                    <label class="field">
+                        <span
+                            >الراتب اليومي / خصم الغياب (يحسب تلقائياً = الراتب
+                            الشهري ÷ 30)</span
+                        >
+                        <input
+                            id="employeeDailySalary"
+                            type="number"
+                            min="0"
+                            step="100"
+                            placeholder="يحسب تلقائياً"
+                            readonly
+                        />
+                    </label>
+                    <label class="field">
+                        <span>أول يوم عمل</span>
+                        <input id="employeeStartDate" type="date" required />
+                    </label>
+                    <label class="field">
+                        <span>صورة الموظف</span>
+                        <input
+                            id="employeeImage"
+                            type="file"
+                            accept="image/*"
+                        />
+                    </label>
+                </div>
+                <label class="field">
+                    <span>ملاحظات</span>
+                    <textarea
+                        id="employeeNotes"
+                        rows="4"
+                        placeholder="اكتب أي ملاحظات مهمة..."
+                    ></textarea>
+                </label>
+                <div class="modal-actions">
+                    <button
+                        class="secondary-btn"
+                        type="button"
+                        data-close-modal
+                    >
+                        إلغاء
+                    </button>
+                    <button class="primary-btn" type="submit">
+                        حفظ البيانات
+                    </button>
+                </div>
+            </form>
+        </dialog>
+
+        <dialog id="withdrawalModal" class="modal glass-panel">
+            <form id="withdrawalForm" method="dialog">
+                <div class="modal-header">
+                    <div>
+                        <p class="eyebrow">Salary Withdrawal</p>
+                        <h2>إضافة سحب راتب</h2>
+                    </div>
+                    <button class="icon-btn" type="button" data-close-modal>
+                        ×
+                    </button>
+                </div>
+                <input id="withdrawalEmployeeId" type="hidden" />
+                <div class="form-grid">
+                    <label class="field">
+                        <span>المبلغ</span>
+                        <input
+                            id="withdrawalAmount"
+                            type="number"
+                            min="1"
+                            step="1000"
+                            required
+                        />
+                    </label>
+                    <label class="field">
+                        <span>التاريخ</span>
+                        <input id="withdrawalDate" type="date" required />
+                    </label>
+                </div>
+                <label class="field">
+                    <span>السبب / البيان</span>
+                    <textarea
+                        id="withdrawalReason"
+                        rows="3"
+                        placeholder="سلفة، مصروف، خصم..."
+                    ></textarea>
+                </label>
+                <div class="modal-actions">
+                    <button
+                        class="secondary-btn"
+                        type="button"
+                        data-close-modal
+                    >
+                        إلغاء
+                    </button>
+                    <button class="primary-btn" type="submit">
+                        إضافة السحب
+                    </button>
+                </div>
+            </form>
+        </dialog>
+
+        <dialog id="deductionModal" class="modal glass-panel">
+            <form id="deductionForm" method="dialog">
+                <div class="modal-header">
+                    <div>
+                        <p class="eyebrow">Salary Deduction</p>
+                        <h2>إضافة خصم يدوي</h2>
+                    </div>
+                    <button class="icon-btn" type="button" data-close-modal>
+                        ×
+                    </button>
+                </div>
+                <input id="deductionEmployeeId" type="hidden" />
+                <div class="form-grid">
+                    <label class="field">
+                        <span>مبلغ الخصم</span>
+                        <input
+                            id="deductionAmount"
+                            type="number"
+                            min="1"
+                            step="1000"
+                            required
+                        />
+                    </label>
+                    <label class="field">
+                        <span>التاريخ</span>
+                        <input id="deductionDate" type="date" required />
+                    </label>
+                </div>
+                <label class="field">
+                    <span>سبب الخصم</span>
+                    <textarea
+                        id="deductionReason"
+                        rows="3"
+                        placeholder="خصم يدوي، مخالفة، نقص صندوق..."
+                    ></textarea>
+                </label>
+                <div class="modal-actions">
+                    <button
+                        class="secondary-btn"
+                        type="button"
+                        data-close-modal
+                    >
+                        إلغاء
+                    </button>
+                    <button class="primary-btn" type="submit">
+                        إضافة الخصم
+                    </button>
+                </div>
+            </form>
+        </dialog>
+
+        <dialog id="batchAttendanceModal" class="modal glass-panel">
+            <form id="batchAttendanceForm" method="dialog">
+                <div class="modal-header">
+                    <div>
+                        <p class="eyebrow">Daily Attendance</p>
+                        <h2>تحديد حضور الموظفين اليوم</h2>
+                    </div>
+                    <button class="icon-btn" type="button" data-close-modal>
+                        ×
+                    </button>
+                </div>
+                <p class="login-subtitle">
+                    اختر الموظفين الحاضرين ثم اضغط موافق. جميع غير المختارين
+                    سيتم تسجيلهم غياب تلقائياً مع خصم الغياب.
+                </p>
+                <div
+                    id="batchAttendanceList"
+                    class="batch-attendance-list"
+                ></div>
+                <div class="modal-actions">
+                    <button
+                        class="secondary-btn"
+                        type="button"
+                        data-close-modal
+                    >
+                        إلغاء
+                    </button>
+                    <button class="primary-btn" type="submit">
+                        موافق وتسجيل اليوم
+                    </button>
+                </div>
+            </form>
+        </dialog>
+
+        <iframe
+            id="printFrame"
+            title="تقرير الطباعة"
+            class="print-frame"
+        ></iframe>
+        <script src="app.js"></script>
+    </body>
+</html>
